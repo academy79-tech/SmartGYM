@@ -195,68 +195,6 @@ const plansData = [
                 exercises: ["deadlift", "leg_press", "leg_extensions", "calf_raises"]
             }
         ]
-    },
-    {
-        id: "plan_upper_lower",
-        titleRu: "4-дневный сплит Верх / Низ",
-        descriptionRu: "Популярная программа с чередованием тренировок верхней и нижней частей тела.",
-        categoryRu: "🧬 Сплит-тренировки",
-        days: [
-            {
-                dayNumber: 1,
-                titleRu: "День 1 — Верх А",
-                focusRu: "Грудь, спина, плечи",
-                exercises: ["bench_press", "barbell_row", "lat_raises"]
-            },
-            {
-                dayNumber: 2,
-                titleRu: "День 2 — Низ А",
-                focusRu: "Квадрицепсы, ягодицы, пресс",
-                exercises: ["deadlift", "leg_press", "crunch"]
-            }
-        ]
-    },
-    {
-        id: "plan_fullbody_men",
-        titleRu: "Фулбади для мужчин (3 раза в неделю)",
-        descriptionRu: "Силовая программа на все тело 3 раза в неделю для набора массы.",
-        categoryRu: "🏋️ Фулбади (Всё тело)",
-        days: [
-            {
-                dayNumber: 1,
-                titleRu: "Силовая фулбади тренировка",
-                focusRu: "Сила и масса",
-                exercises: ["deadlift", "bench_press", "lat_pulldown", "overhead_press"]
-            }
-        ]
-    },
-    {
-        id: "plan_fullbody_women",
-        titleRu: "Фулбади для женщин (3 раза в неделю)",
-        descriptionRu: "Сбалансированная программа для тонуса всего тела, осанки и ягодиц.",
-        categoryRu: "🏋️ Фулбади (Всё тело)",
-        days: [
-            {
-                dayNumber: 1,
-                titleRu: "Тренировка тонус",
-                focusRu: "Ягодицы, ноги, осанка",
-                exercises: ["hyperextension", "leg_press", "lunges", "lat_pulldown", "crunch"]
-            }
-        ]
-    },
-    {
-        id: "plan_weight_loss",
-        titleRu: "Жиросжигание и рельеф",
-        descriptionRu: "Интенсивные круговые тренировки для максимального сжигания калорий.",
-        categoryRu: "⚡ Специализированные программы",
-        days: [
-            {
-                dayNumber: 1,
-                titleRu: "Круговая тренировка",
-                focusRu: "Кардио и тонус",
-                exercises: ["lunges", "dips", "lat_pulldown", "crunch"]
-            }
-        ]
     }
 ];
 
@@ -279,6 +217,7 @@ let state = {
     currentDayIndex: 0,
     selectedPlanDetail: null,
     selectedExercise: null,
+    voiceExercises: ["Жим штанги лежа", "Становая тяга", "Скручивания"],
     history: JSON.parse(localStorage.getItem('smartgym_history') || '[]'),
     userEmail: localStorage.getItem('smartgym_email') || ''
 };
@@ -296,7 +235,6 @@ function navigateTo(screenId, pushStack = true) {
 
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
 
-    // Show/Hide back button in header
     const backBtn = document.getElementById('header-back');
     if (screenId === 'home') {
         backBtn.classList.add('hidden');
@@ -332,7 +270,6 @@ window.addEventListener('touchend', e => {
 }, false);
 
 function handleSwipe() {
-    // Swipe right from left edge (swipe distance > 70px starting near left border < 60px)
     if (touchEndX - touchStartX > 70 && touchStartX < 60) {
         goBack();
     }
@@ -343,7 +280,7 @@ function render() {
     document.getElementById('home-plan-title').innerText = state.activePlan.titleRu;
     document.getElementById('home-plan-desc').innerText = state.activePlan.descriptionRu;
 
-    // Plans Catalog grouped by category
+    // Plans Catalog
     const plansList = document.getElementById('plans-list');
     plansList.innerHTML = '';
     const categories = [...new Set(plansData.map(p => p.categoryRu))];
@@ -425,6 +362,17 @@ function render() {
         `;
     });
 
+    // Voice Plan Screen rendering exercises list
+    const voiceExContainer = document.getElementById('voice-exercises-container');
+    if (voiceExContainer) {
+        voiceExContainer.innerHTML = state.voiceExercises.map((ex, i) => `
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 0;">
+                <span>${i + 1}. ${ex}</span>
+                <button class="btn btn-secondary" style="width: auto; padding: 2px 8px; font-size: 11px;" onclick="removeVoiceEx(${i})">Удалить</button>
+            </div>
+        `).join('');
+    }
+
     // Diary
     const diaryStats = document.getElementById('diary-stats');
     const totalWorkouts = state.history.length;
@@ -500,12 +448,69 @@ function switchExVariant(exKey, variantIdx) {
     }
 }
 
+function showAddExerciseModal() {
+    const listDiv = document.getElementById('add-exercise-list');
+    listDiv.innerHTML = '';
+    Object.keys(exercisesDb).forEach(key => {
+        const ex = exercisesDb[key];
+        listDiv.innerHTML += `
+            <div class="card" onclick="addExerciseToCurrentWorkout('${key}')" style="cursor: pointer; padding: 12px; margin-bottom: 8px;">
+                <strong>${ex.name}</strong><br>
+                <small style="color: var(--primary-color);">${ex.muscles.join(', ')}</small>
+            </div>
+        `;
+    });
+    navigateTo('add-exercise');
+}
+
+function addExerciseToCurrentWorkout(exKey) {
+    const day = state.activePlan.days[state.currentDayIndex];
+    if (day) {
+        day.exercises.push(exKey);
+        alert('Упражнение успешно добавлено в тренировку!');
+        navigateTo('workout');
+    }
+}
+
+function startVoiceRecognition() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+        const manual = prompt("Голосовой ввод не поддерживается браузером. Введите название упражнения:", "Приседания");
+        if (manual) {
+            state.voiceExercises.push(manual);
+            render();
+        }
+        return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'ru-RU';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onresult = (event) => {
+        const speechResult = event.results[0][0].transcript;
+        state.voiceExercises.push(speechResult);
+        render();
+        alert(`Распознано: "${speechResult}"`);
+    };
+
+    recognition.onerror = (event) => {
+        alert("Ошибка распознавания речи: " + event.error);
+    };
+
+    recognition.start();
+}
+
+function removeVoiceEx(index) {
+    state.voiceExercises.splice(index, 1);
+    render();
+}
+
 function saveVoicePlan() {
     const title = document.getElementById('voice-plan-title').value || "Мой план";
-    const rawExs = document.getElementById('voice-exercises').value.split(',').map(s => s.trim()).filter(Boolean);
 
-    // Map raw names to keys or create custom
-    const exKeys = rawExs.map(name => {
+    const exKeys = state.voiceExercises.map(name => {
         const foundKey = Object.keys(exercisesDb).find(k => exercisesDb[k].name.toLowerCase().includes(name.toLowerCase()));
         return foundKey || "bench_press";
     });
@@ -513,7 +518,7 @@ function saveVoicePlan() {
     const newPlan = {
         id: "custom_" + Date.now(),
         titleRu: title,
-        descriptionRu: "Создано с помощью ввода",
+        descriptionRu: "Создано с помощью голосового ввода",
         categoryRu: "🎙️ Пользовательские планы",
         days: [
             {
@@ -532,20 +537,15 @@ function saveVoicePlan() {
     navigateTo('workout');
 }
 
-function updateExReps(idx, val) {
-    // handled inline
-}
-
-function updateExWeight(idx, val) {
-    // handled inline
-}
+function updateExReps(idx, val) {}
+function updateExWeight(idx, val) {}
 
 function requestFinishWorkout() {
     if (confirm("Завершить тренировку и сохранить в дневник?")) {
         const day = state.activePlan.days[state.currentDayIndex];
         let tonnage = 0;
         day.exercises.forEach(() => {
-            tonnage += 12 * 50 * 3; // default estimate
+            tonnage += 12 * 50 * 3;
         });
 
         const record = {

@@ -25,7 +25,7 @@
 
             <div class="card" onclick="navigateTo('voice_plan')" style="cursor: pointer; background: linear-gradient(135deg, #1e3a34, #243444);">
                 <div class="card-title">🎙️ Создать план голосом</div>
-                <p style="font-size: 13px; color: var(--text-secondary);">Надиктовывайте упражнения для своей программы</p>
+                <p style="font-size: 13px; color: var(--text-secondary);">Надиктовывайте упражнения голосом для своей программы</p>
             </div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
@@ -86,7 +86,9 @@
                 <div class="card-title" id="workout-day-title">Текущая тренировка</div>
                 <p id="workout-day-focus" style="font-size: 13px; color: var(--accent-color); margin-bottom: 12px;"></p>
                 <div id="workout-exercises-list"></div>
-                <button class="btn" onclick="requestFinishWorkout()" style="margin-top: 16px;">Завершить тренировку</button>
+
+                <button class="btn btn-secondary" onclick="showAddExerciseModal()" style="margin-top: 12px;">+ Добавить упражнение</button>
+                <button class="btn" onclick="requestFinishWorkout()" style="margin-top: 12px;">Завершить тренировку</button>
             </div>
         </div>
 
@@ -94,10 +96,23 @@
         <div id="screen-voice_plan" class="screen hidden">
             <div class="card">
                 <div class="card-title">🎙️ Создать план голосом</div>
-                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">Введите название и список упражнений через запятую:</p>
+                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">Нажмите на микрофон и надиктовывайте упражнения:</p>
                 <label>Название плана: <input type="text" id="voice-plan-title" value="Моя авторская программа"></label>
-                <label>Упражнения (через запятую): <input type="text" id="voice-exercises" value="Жим штанги лежа, Тяга штанги в наклоне, Приседания"></label>
-                <button class="btn" onclick="saveVoicePlan()" style="margin-top: 12px;">Сохранить и начать</button>
+
+                <button class="btn" onclick="startVoiceRecognition()" style="background-color: #4285F4; color: white; margin: 12px 0;">🎙️ Надиктовать голосом</button>
+
+                <div class="card-title" style="margin-top: 12px;">Распознанные упражнения:</div>
+                <div id="voice-exercises-container" style="background: var(--surface-variant); padding: 8px; border-radius: 8px; min-height: 60px; margin-bottom: 12px;"></div>
+
+                <button class="btn" onclick="saveVoicePlan()">Сохранить и начать тренировку</button>
+            </div>
+        </div>
+
+        <!-- Add Exercise Modal / Section -->
+        <div id="screen-add-exercise" class="screen hidden">
+            <div class="card">
+                <div class="card-title" style="margin-bottom: 12px;">Выберите упражнение для добавления</div>
+                <div id="add-exercise-list"></div>
             </div>
         </div>
 

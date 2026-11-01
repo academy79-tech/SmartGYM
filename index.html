@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Smart GYM - Telegram Mini App</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <header id="app-header">Smart GYM</header>
+
+    <div class="container" id="app-container">
+        <!-- Home Screen -->
+        <div id="screen-home" class="screen">
+            <div class="card" style="background: linear-gradient(135deg, #1C2A38, #243444);">
+                <div class="card-title">🔥 Активный план</div>
+                <h3 id="home-plan-title" style="margin-bottom: 8px; color: var(--accent-color);">Загрузка...</h3>
+                <p id="home-plan-desc" style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;"></p>
+                <button class="btn" onclick="navigateTo('workout')">Начать тренировку</button>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+                <div class="card" onclick="navigateTo('diary')" style="cursor: pointer; margin:0;">
+                    <div class="card-title">📖 Дневник</div>
+                    <p style="font-size: 12px; color: var(--text-secondary);">История и тоннаж</p>
+                </div>
+                <div class="card" onclick="navigateTo('warmup')" style="cursor: pointer; margin:0;">
+                    <div class="card-title">🔥 Разминка</div>
+                    <p style="font-size: 12px; color: var(--text-secondary);">15 суставных движений</p>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+                <div class="card" onclick="navigateTo('calculator')" style="cursor: pointer; margin:0;">
+                    <div class="card-title">📊 1RM Калькулятор</div>
+                    <p style="font-size: 12px; color: var(--text-secondary);">Максимум силы</p>
+                </div>
+                <div class="card" onclick="navigateTo('calorie')" style="cursor: pointer; margin:0;">
+                    <div class="card-title">⚡ Калории и БЖУ</div>
+                    <p style="font-size: 12px; color: var(--text-secondary);">Формула Миффлина</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Plans Screen -->
+        <div id="screen-plans" class="screen hidden">
+            <div class="card-title" style="margin-bottom: 16px;">Каталог тренировок</div>
+            <div id="plans-list"></div>
+        </div>
+
+        <!-- Workout Screen -->
+        <div id="screen-workout" class="screen hidden">
+            <div class="card">
+                <div class="card-title" id="workout-day-title">Текущая тренировка</div>
+                <p id="workout-day-focus" style="font-size: 13px; color: var(--accent-color); margin-bottom: 12px;"></p>
+                <div id="workout-exercises-list"></div>
+                <button class="btn" onclick="requestFinishWorkout()" style="margin-top: 16px;">Завершить тренировку</button>
+            </div>
+        </div>
+
+        <!-- Diary Screen -->
+        <div id="screen-diary" class="screen hidden">
+            <div class="card-title" style="margin-bottom: 16px;">Дневник и статистика</div>
+            <div id="diary-stats" class="card"></div>
+            <div id="diary-history"></div>
+        </div>
+
+        <!-- Warmup Screen -->
+        <div id="screen-warmup" class="screen hidden">
+            <div class="card-title" style="margin-bottom: 16px;">Разминка перед тренировкой</div>
+            <div id="warmup-list"></div>
+        </div>
+
+        <!-- 1RM Calculator Screen -->
+        <div id="screen-calculator" class="screen hidden">
+            <div class="card">
+                <div class="card-title">Калькулятор 1RM</div>
+                <label>Вес снаряда (кг): <input type="number" id="rm-weight" value="80" oninput="calculate1RM()"></label>
+                <label>Повторения: <input type="number" id="rm-reps" value="8" oninput="calculate1RM()"></label>
+                <div style="margin-top: 16px; background: var(--surface-variant); padding: 12px; border-radius: 8px;" id="rm-result"></div>
+            </div>
+        </div>
+
+        <!-- Calorie Calculator Screen -->
+        <div id="screen-calorie" class="screen hidden">
+            <div class="card">
+                <div class="card-title">Калькулятор калорий и БЖУ</div>
+                <label>Пол:
+                    <select id="cal-gender" onchange="calculateCalories()">
+                        <option value="male">Мужчина</option>
+                        <option value="female">Женщина</option>
+                    </select>
+                </label>
+                <label>Вес (кг): <input type="number" id="cal-weight" value="75" oninput="calculateCalories()"></label>
+                <label>Рост (см): <input type="number" id="cal-height" value="178" oninput="calculateCalories()"></label>
+                <label>Возраст: <input type="number" id="cal-age" value="28" oninput="calculateCalories()"></label>
+                <div style="margin-top: 16px; background: var(--surface-variant); padding: 12px; border-radius: 8px;" id="cal-result"></div>
+            </div>
+        </div>
+
+        <!-- Consultations Screen -->
+        <div id="screen-consultations" class="screen hidden">
+            <div class="card" style="background: linear-gradient(135deg, #004d7a, #0088cc);">
+                <div class="card-title" style="color: white;">💬 Чат с тренером в Telegram</div>
+                <p style="margin-bottom: 16px; color: #E0F2FE;">Получите персональную консультацию, разбор техники и рекомендации напрямую от эксперта.</p>
+                <a href="https://t.me/Bestrong79" target="_blank" class="btn" style="background-color: white; color: #0088CC;">Открыть чат (@bestrong79)</a>
+            </div>
+        </div>
+
+        <!-- Profile Screen -->
+        <div id="screen-profile" class="screen hidden">
+            <div class="card">
+                <div class="card-title">Профиль пользователя</div>
+                <p id="profile-email" style="margin-bottom: 12px;">Gmail: не авторизован</p>
+                <button class="btn btn-secondary" onclick="loginGoogle()" style="background-color: #4285F4; color: white;">Войти через Google Gmail</button>
+                <button class="btn btn-secondary" onclick="logout()" style="margin-top: 8px; background-color: var(--error-color); color: white;">Выйти</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="nav-bar">
+        <button class="nav-item active" onclick="navigateTo('home')">🏠 Главная</button>
+        <button class="nav-item" onclick="navigateTo('plans')">📋 Планы</button>
+        <button class="nav-item" onclick="navigateTo('workout')">🏋️ Тренировка</button>
+        <button class="nav-item" onclick="navigateTo('consultations')">💬 Чат</button>
+        <button class="nav-item" onclick="navigateTo('profile')">👤 Профиль</button>
+    </nav>
+
+    <script src="app.js"></script>
+</body>
+</html>

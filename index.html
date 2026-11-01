@@ -8,7 +8,10 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <header id="app-header">Smart GYM</header>
+    <header id="app-header">
+        <button id="header-back" class="back-btn hidden" onclick="goBack()">← Назад</button>
+        <span id="header-title">Smart GYM</span>
+    </header>
 
     <div class="container" id="app-container">
         <!-- Home Screen -->
@@ -20,6 +23,11 @@
                 <button class="btn" onclick="navigateTo('workout')">Начать тренировку</button>
             </div>
 
+            <div class="card" onclick="navigateTo('voice_plan')" style="cursor: pointer; background: linear-gradient(135deg, #1e3a34, #243444);">
+                <div class="card-title">🎙️ Создать план голосом</div>
+                <p style="font-size: 13px; color: var(--text-secondary);">Надиктовывайте упражнения для своей программы</p>
+            </div>
+
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
                 <div class="card" onclick="navigateTo('diary')" style="cursor: pointer; margin:0;">
                     <div class="card-title">📖 Дневник</div>
@@ -27,7 +35,7 @@
                 </div>
                 <div class="card" onclick="navigateTo('warmup')" style="cursor: pointer; margin:0;">
                     <div class="card-title">🔥 Разминка</div>
-                    <p style="font-size: 12px; color: var(--text-secondary);">15 суставных движений</p>
+                    <p style="font-size: 12px; color: var(--text-secondary);">9 базовых движений</p>
                 </div>
             </div>
 
@@ -49,6 +57,29 @@
             <div id="plans-list"></div>
         </div>
 
+        <!-- Plan Detail View -->
+        <div id="screen-plan-detail" class="screen hidden">
+            <div class="card">
+                <h2 id="detail-plan-title" style="color: var(--accent-color); margin-bottom: 8px;"></h2>
+                <p id="detail-plan-desc" style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;"></p>
+                <div id="detail-days-list"></div>
+                <button class="btn" onclick="activateSelectedPlan()" style="margin-top: 16px;">Выбрать этот план</button>
+            </div>
+        </div>
+
+        <!-- Exercise Detail View -->
+        <div id="screen-exercise-detail" class="screen hidden">
+            <div class="card">
+                <h2 id="ex-detail-name" style="color: var(--accent-color); margin-bottom: 12px;"></h2>
+                <img id="ex-detail-img" class="exercise-img" src="" alt="Техника упражнения">
+                <div id="ex-variants-selector" style="display: flex; gap: 8px; margin-bottom: 12px; overflow-x: auto;"></div>
+                <div class="card-title">Целевые мышцы:</div>
+                <p id="ex-detail-muscles" style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;"></p>
+                <div class="card-title">Техника выполнения:</div>
+                <ol id="ex-detail-instructions" style="padding-left: 20px; font-size: 14px; line-height: 1.5; color: var(--text-secondary);"></ol>
+            </div>
+        </div>
+
         <!-- Workout Screen -->
         <div id="screen-workout" class="screen hidden">
             <div class="card">
@@ -56,6 +87,17 @@
                 <p id="workout-day-focus" style="font-size: 13px; color: var(--accent-color); margin-bottom: 12px;"></p>
                 <div id="workout-exercises-list"></div>
                 <button class="btn" onclick="requestFinishWorkout()" style="margin-top: 16px;">Завершить тренировку</button>
+            </div>
+        </div>
+
+        <!-- Voice Plan Screen -->
+        <div id="screen-voice_plan" class="screen hidden">
+            <div class="card">
+                <div class="card-title">🎙️ Создать план голосом</div>
+                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">Введите название и список упражнений через запятую:</p>
+                <label>Название плана: <input type="text" id="voice-plan-title" value="Моя авторская программа"></label>
+                <label>Упражнения (через запятую): <input type="text" id="voice-exercises" value="Жим штанги лежа, Тяга штанги в наклоне, Приседания"></label>
+                <button class="btn" onclick="saveVoicePlan()" style="margin-top: 12px;">Сохранить и начать</button>
             </div>
         </div>
 
@@ -68,7 +110,7 @@
 
         <!-- Warmup Screen -->
         <div id="screen-warmup" class="screen hidden">
-            <div class="card-title" style="margin-bottom: 16px;">Разминка перед тренировкой</div>
+            <div class="card-title" style="margin-bottom: 16px;">Правильная разминка (по 10 пов.)</div>
             <div id="warmup-list"></div>
         </div>
 

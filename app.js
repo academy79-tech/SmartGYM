@@ -114,7 +114,7 @@ const exercisesDb = {
     "biceps_curls": {
         name: "Сгибания на бицепс",
         muscles: ["Бицепс"],
-        instructions: ["Локти прижаты к бокам и неподвижными."],
+        instructions: ["Локти прижаты к бокам и неподвижны."],
         variants: ["exercises/biceps_curls.gif"]
     },
     "triceps_pushdown": {
@@ -131,6 +131,7 @@ const exercisesDb = {
     }
 };
 
+// All 8 Professional Training Plans
 const plansData = [
     {
         id: "plan_5_day_split",
@@ -193,6 +194,114 @@ const plansData = [
                 titleRu: "День 3 — Ноги (Legs)",
                 focusRu: "Квадрицепсы, бицепс бедра, икры",
                 exercises: ["deadlift", "leg_press", "leg_extensions", "calf_raises"]
+            }
+        ]
+    },
+    {
+        id: "plan_upper_lower",
+        titleRu: "4-дневный сплит Верх / Низ",
+        descriptionRu: "Популярная программа с чередованием тренировок верхней и нижней частей тела.",
+        categoryRu: "🧬 Сплит-тренировки",
+        days: [
+            {
+                dayNumber: 1,
+                titleRu: "День 1 — Верх А",
+                focusRu: "Грудь, спина, плечи",
+                exercises: ["bench_press", "barbell_row", "lat_raises"]
+            },
+            {
+                dayNumber: 2,
+                titleRu: "День 2 — Низ А",
+                focusRu: "Квадрицепсы, ягодицы, пресс",
+                exercises: ["deadlift", "leg_press", "crunch"]
+            },
+            {
+                dayNumber: 3,
+                titleRu: "День 3 — Верх Б",
+                focusRu: "Плечи, руки, спина",
+                exercises: ["overhead_press", "seated_row", "biceps_curls"]
+            },
+            {
+                dayNumber: 4,
+                titleRu: "День 4 — Низ Б",
+                focusRu: "Бицепс бедра, икры",
+                exercises: ["leg_curls", "lunges", "calf_raises"]
+            }
+        ]
+    },
+    {
+        id: "plan_fullbody_men",
+        titleRu: "Фулбади для мужчин (3 раза в неделю)",
+        descriptionRu: "Силовая программа на все тело 3 раза в неделю для набора массы.",
+        categoryRu: "🏋️ Фулбади (Всё тело)",
+        days: [
+            {
+                dayNumber: 1,
+                titleRu: "Силовая фулбади тренировка",
+                focusRu: "Сила и масса",
+                exercises: ["deadlift", "bench_press", "lat_pulldown", "overhead_press"]
+            }
+        ]
+    },
+    {
+        id: "plan_fullbody_women",
+        titleRu: "Фулбади для женщин (3 раза в неделю)",
+        descriptionRu: "Сбалансированная программа для тонуса всего тела, осанки и ягодиц.",
+        categoryRu: "🏋️ Фулбади (Всё тело)",
+        days: [
+            {
+                dayNumber: 1,
+                titleRu: "Тренировка тонус",
+                focusRu: "Ягодицы, ноги, осанка",
+                exercises: ["hyperextension", "leg_press", "lunges", "lat_pulldown", "crunch"]
+            }
+        ]
+    },
+    {
+        id: "plan_weight_loss",
+        titleRu: "Жиросжигание и рельеф",
+        descriptionRu: "Интенсивные круговые тренировки для максимального сжигания калорий.",
+        categoryRu: "⚡ Специализированные программы",
+        days: [
+            {
+                dayNumber: 1,
+                titleRu: "Круговая тренировка",
+                focusRu: "Кардио и тонус",
+                exercises: ["lunges", "dips", "lat_pulldown", "crunch"]
+            }
+        ]
+    },
+    {
+        id: "plan_hypertrophy",
+        titleRu: "Максимальная гипертрофия и масса",
+        descriptionRu: "Продвинутая бодибилдинг программа для максимального роста мышечных объемов.",
+        categoryRu: "🧬 Сплит-тренировки",
+        days: [
+            {
+                dayNumber: 1,
+                titleRu: "Грудь и Бицепс",
+                focusRu: "Гипертрофия верха",
+                exercises: ["bench_press", "incline_db_press", "biceps_curls"]
+            },
+            {
+                dayNumber: 2,
+                titleRu: "Спина и Трицепс",
+                focusRu: "Гипертрофия спины",
+                exercises: ["deadlift", "lat_pulldown", "triceps_pushdown"]
+            }
+        ]
+    },
+    {
+        id: "plan_powerlifting",
+        titleRu: "Силовая база пауэрлифтинга",
+        descriptionRu: "Развитие максимальных силовых показателей в базовых соревновательных движениях.",
+        categoryRu: "⚡ Специализированные программы",
+        days: [
+            {
+                dayNumber: 1,
+                titleRu: "Силовой день — База",
+                focusRu: "Приседания, жим, тяга",
+                exercises: ["bench_press", "deadlift", "overhead_press"]
             }
         ]
     }
@@ -320,7 +429,7 @@ function render() {
     document.getElementById('home-plan-title').innerText = state.activePlan.titleRu;
     document.getElementById('home-plan-desc').innerText = state.activePlan.descriptionRu;
 
-    // Plans Catalog
+    // Plans Catalog grouped by category
     const plansList = document.getElementById('plans-list');
     plansList.innerHTML = '';
     const categories = [...new Set(plansData.map(p => p.categoryRu))];
@@ -551,7 +660,6 @@ function removeVoiceEx(index) {
 function saveVoicePlan() {
     const title = document.getElementById('voice-plan-title').value || "Мой план";
 
-    // Intelligent Fuzzy Matching for Voice Input
     const exKeys = state.voiceExercises.map(name => {
         const lower = name.toLowerCase();
         let matchedKey = "bench_press";
@@ -626,7 +734,6 @@ function calculate1RM() {
     const r = parseFloat(document.getElementById('rm-reps').value) || 8;
     const rm = Math.round(w * (1 + r / 30));
 
-    // Powerlifting percentage breakdown
     const p50 = Math.round(rm * 0.50);
     const p60 = Math.round(rm * 0.60);
     const p70 = Math.round(rm * 0.70);

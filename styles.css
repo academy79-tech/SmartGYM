@@ -54,8 +54,9 @@ header {
 .container {
     flex: 1;
     padding: 16px;
-    overflow-y: auto;
-    padding-bottom: 90px;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 140px;
 }
 
 .card {

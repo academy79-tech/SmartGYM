@@ -114,7 +114,7 @@ const exercisesDb = {
     "biceps_curls": {
         name: "Сгибания на бицепс",
         muscles: ["Бицепс"],
-        instructions: ["Локти прижаты к бокам и неподвижны."],
+        instructions: ["Локти прижаты к бокам и неподвижными."],
         variants: ["exercises/biceps_curls.gif"]
     },
     "triceps_pushdown": {
@@ -131,7 +131,6 @@ const exercisesDb = {
     }
 };
 
-// All 8 Professional Training Plans
 const plansData = [
     {
         id: "plan_5_day_split",
@@ -196,114 +195,6 @@ const plansData = [
                 exercises: ["deadlift", "leg_press", "leg_extensions", "calf_raises"]
             }
         ]
-    },
-    {
-        id: "plan_upper_lower",
-        titleRu: "4-дневный сплит Верх / Низ",
-        descriptionRu: "Популярная программа с чередованием тренировок верхней и нижней частей тела.",
-        categoryRu: "🧬 Сплит-тренировки",
-        days: [
-            {
-                dayNumber: 1,
-                titleRu: "День 1 — Верх А",
-                focusRu: "Грудь, спина, плечи",
-                exercises: ["bench_press", "barbell_row", "lat_raises"]
-            },
-            {
-                dayNumber: 2,
-                titleRu: "День 2 — Низ А",
-                focusRu: "Квадрицепсы, ягодицы, пресс",
-                exercises: ["deadlift", "leg_press", "crunch"]
-            },
-            {
-                dayNumber: 3,
-                titleRu: "День 3 — Верх Б",
-                focusRu: "Плечи, руки, спина",
-                exercises: ["overhead_press", "seated_row", "biceps_curls"]
-            },
-            {
-                dayNumber: 4,
-                titleRu: "День 4 — Низ Б",
-                focusRu: "Бицепс бедра, икры",
-                exercises: ["leg_curls", "lunges", "calf_raises"]
-            }
-        ]
-    },
-    {
-        id: "plan_fullbody_men",
-        titleRu: "Фулбади для мужчин (3 раза в неделю)",
-        descriptionRu: "Силовая программа на все тело 3 раза в неделю для набора массы.",
-        categoryRu: "🏋️ Фулбади (Всё тело)",
-        days: [
-            {
-                dayNumber: 1,
-                titleRu: "Силовая фулбади тренировка",
-                focusRu: "Сила и масса",
-                exercises: ["deadlift", "bench_press", "lat_pulldown", "overhead_press"]
-            }
-        ]
-    },
-    {
-        id: "plan_fullbody_women",
-        titleRu: "Фулбади для женщин (3 раза в неделю)",
-        descriptionRu: "Сбалансированная программа для тонуса всего тела, осанки и ягодиц.",
-        categoryRu: "🏋️ Фулбади (Всё тело)",
-        days: [
-            {
-                dayNumber: 1,
-                titleRu: "Тренировка тонус",
-                focusRu: "Ягодицы, ноги, осанка",
-                exercises: ["hyperextension", "leg_press", "lunges", "lat_pulldown", "crunch"]
-            }
-        ]
-    },
-    {
-        id: "plan_weight_loss",
-        titleRu: "Жиросжигание и рельеф",
-        descriptionRu: "Интенсивные круговые тренировки для максимального сжигания калорий.",
-        categoryRu: "⚡ Специализированные программы",
-        days: [
-            {
-                dayNumber: 1,
-                titleRu: "Круговая тренировка",
-                focusRu: "Кардио и тонус",
-                exercises: ["lunges", "dips", "lat_pulldown", "crunch"]
-            }
-        ]
-    },
-    {
-        id: "plan_hypertrophy",
-        titleRu: "Максимальная гипертрофия и масса",
-        descriptionRu: "Продвинутая бодибилдинг программа для максимального роста мышечных объемов.",
-        categoryRu: "🧬 Сплит-тренировки",
-        days: [
-            {
-                dayNumber: 1,
-                titleRu: "Грудь и Бицепс",
-                focusRu: "Гипертрофия верха",
-                exercises: ["bench_press", "incline_db_press", "biceps_curls"]
-            },
-            {
-                dayNumber: 2,
-                titleRu: "Спина и Трицепс",
-                focusRu: "Гипертрофия спины",
-                exercises: ["deadlift", "lat_pulldown", "triceps_pushdown"]
-            }
-        ]
-    },
-    {
-        id: "plan_powerlifting",
-        titleRu: "Силовая база пауэрлифтинга",
-        descriptionRu: "Развитие максимальных силовых показателей в базовых соревновательных движениях.",
-        categoryRu: "⚡ Специализированные программы",
-        days: [
-            {
-                dayNumber: 1,
-                titleRu: "Силовой день — База",
-                focusRu: "Приседания, жим, тяга",
-                exercises: ["bench_press", "deadlift", "overhead_press"]
-            }
-        ]
     }
 ];
 
@@ -319,7 +210,7 @@ const warmupData = [
     { title: "Подъем на носки", reps: "10 повторений", desc: "Динамичные подъемы на носки для разогрева стоп и икроножных." }
 ];
 
-// App State
+// App State & Rest Timer
 let state = {
     currentScreen: 'home',
     activePlan: plansData[0],
@@ -330,6 +221,46 @@ let state = {
     history: JSON.parse(localStorage.getItem('smartgym_history') || '[]'),
     userEmail: localStorage.getItem('smartgym_email') || ''
 };
+
+let restTimerInterval = null;
+let restSecondsRemaining = 90;
+
+function startRestTimer(seconds = 90) {
+    restSecondsRemaining = seconds;
+    const card = document.getElementById('rest-timer-card');
+    card.classList.remove('hidden');
+
+    if (restTimerInterval) clearInterval(restTimerInterval);
+
+    restTimerInterval = setInterval(() => {
+        if (restSecondsRemaining > 0) {
+            restSecondsRemaining--;
+            updateTimerDisplay();
+        } else {
+            clearInterval(restTimerInterval);
+            card.classList.add('hidden');
+            if (navigator.vibrate) navigator.vibrate(500);
+            alert('Время отдыха завершено! Переходите к следующему подходу.');
+        }
+    }, 1000);
+    updateTimerDisplay();
+}
+
+function setRestTime(secs) {
+    restSecondsRemaining = secs;
+    updateTimerDisplay();
+}
+
+function skipRestTimer() {
+    if (restTimerInterval) clearInterval(restTimerInterval);
+    document.getElementById('rest-timer-card').classList.add('hidden');
+}
+
+function updateTimerDisplay() {
+    const m = Math.floor(restSecondsRemaining / 60);
+    const s = restSecondsRemaining % 60;
+    document.getElementById('timer-display').innerText = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+}
 
 // Navigation History stack for Back button
 let navStack = ['home'];
@@ -463,9 +394,10 @@ function render() {
         workoutList.innerHTML += `
             <div class="card" style="margin-bottom: 12px; background: var(--surface-variant);">
                 <strong onclick="openExerciseDetail('${exKey}')" style="cursor: pointer; color: var(--accent-color);">${idx + 1}. ${exObj.name} 🎬</strong>
-                <div style="display: flex; gap: 8px; margin-top: 8px;">
-                    <label style="flex:1; font-size:12px;">Повторы: <input type="number" value="12" onchange="updateExReps(${idx}, this.value)"></label>
-                    <label style="flex:1; font-size:12px;">Вес (кг): <input type="number" value="0" placeholder="0" onchange="updateExWeight(${idx}, this.value)"></label>
+                <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
+                    <label style="flex:1; font-size:12px;">Повторы: <input type="number" value="12" placeholder="12"></label>
+                    <label style="flex:1; font-size:12px;">Вес (кг): <input type="number" value="0" placeholder="0"></label>
+                    <button class="btn" style="width: auto; padding: 6px 12px; margin-top: 14px;" onclick="startRestTimer(90)">Отметить</button>
                 </div>
             </div>
         `;
@@ -619,9 +551,30 @@ function removeVoiceEx(index) {
 function saveVoicePlan() {
     const title = document.getElementById('voice-plan-title').value || "Мой план";
 
+    // Intelligent Fuzzy Matching for Voice Input
     const exKeys = state.voiceExercises.map(name => {
-        const foundKey = Object.keys(exercisesDb).find(k => exercisesDb[k].name.toLowerCase().includes(name.toLowerCase()));
-        return foundKey || "bench_press";
+        const lower = name.toLowerCase();
+        let matchedKey = "bench_press";
+        if (lower.includes("присед") || lower.includes("ног")) matchedKey = "leg_press";
+        else if (lower.includes("станов") || lower.includes("спин")) matchedKey = "deadlift";
+        else if (lower.includes("жим лежа") || lower.includes("груд")) matchedKey = "bench_press";
+        else if (lower.includes("наклон") || lower.includes("гантел")) matchedKey = "incline_db_press";
+        else if (lower.includes("брус") || lower.includes("отжим")) matchedKey = "dips";
+        else if (lower.includes("тяга") && lower.includes("верх")) matchedKey = "lat_pulldown";
+        else if (lower.includes("тяга") && lower.includes("гориз")) matchedKey = "seated_row";
+        else if (lower.includes("тяга")) matchedKey = "barbell_row";
+        else if (lower.includes("пресс") || lower.includes("скруч")) matchedKey = "crunch";
+        else if (lower.includes("бицепс") || lower.includes("сгиб")) matchedKey = "biceps_curls";
+        else if (lower.includes("трицепс") || lower.includes("разгиб")) matchedKey = "triceps_pushdown";
+        else if (lower.includes("плеч") || lower.includes("жим сид")) matchedKey = "overhead_press";
+        else if (lower.includes("мах") || lower.includes("дельт")) matchedKey = "lat_raises";
+        else if (lower.includes("гипер")) matchedKey = "hyperextension";
+        else if (lower.includes("икр") || lower.includes("носк")) matchedKey = "calf_raises";
+        else {
+            const found = Object.keys(exercisesDb).find(k => exercisesDb[k].name.toLowerCase().includes(lower));
+            if (found) matchedKey = found;
+        }
+        return matchedKey;
     });
 
     const newPlan = {
@@ -645,9 +598,6 @@ function saveVoicePlan() {
     alert('План успешно создан и активирован!');
     navigateTo('workout');
 }
-
-function updateExReps(idx, val) {}
-function updateExWeight(idx, val) {}
 
 function requestFinishWorkout() {
     if (confirm("Завершить тренировку и сохранить в дневник?")) {
@@ -675,7 +625,31 @@ function calculate1RM() {
     const w = parseFloat(document.getElementById('rm-weight').value) || 80;
     const r = parseFloat(document.getElementById('rm-reps').value) || 8;
     const rm = Math.round(w * (1 + r / 30));
-    document.getElementById('rm-result').innerHTML = `Расчетный максимум (1RM): <strong>${rm} кг</strong>`;
+
+    // Powerlifting percentage breakdown
+    const p50 = Math.round(rm * 0.50);
+    const p60 = Math.round(rm * 0.60);
+    const p70 = Math.round(rm * 0.70);
+    const p75 = Math.round(rm * 0.75);
+    const p80 = Math.round(rm * 0.80);
+    const p85 = Math.round(rm * 0.85);
+    const p90 = Math.round(rm * 0.90);
+    const p95 = Math.round(rm * 0.95);
+
+    document.getElementById('rm-result').innerHTML = `
+        Расчетный максимум (1RM): <strong>${rm} кг</strong><br><br>
+        <div style="font-size: 13px; line-height: 1.6;">
+            <strong>Таблица процентовки:</strong><br>
+            • 95% (1-2 пов): <strong>${p95} кг</strong><br>
+            • 90% (3-4 пов): <strong>${p90} кг</strong><br>
+            • 85% (5-6 пов): <strong>${p85} кг</strong><br>
+            • 80% (7-8 пов): <strong>${p80} кг</strong><br>
+            • 75% (9-10 пов): <strong>${p75} кг</strong><br>
+            • 70% (11-12 пов): <strong>${p70} кг</strong><br>
+            • 60% (разминка): <strong>${p60} кг</strong><br>
+            • 50% (разминка): <strong>${p50} кг</strong>
+        </div>
+    `;
 }
 
 function calculateCalories() {

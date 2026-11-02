@@ -25,7 +25,7 @@
 
             <div class="card" onclick="navigateTo('voice_plan')" style="cursor: pointer; background: linear-gradient(135deg, #1e3a34, #243444);">
                 <div class="card-title">🎙️ Создать план голосом</div>
-                <p style="font-size: 13px; color: var(--text-secondary);">Надиктовывайте упражнения голосом для своей программы</p>
+                <p style="font-size: 13px; color: var(--text-secondary);">Надиктовывайте упражнения для своей программы</p>
             </div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
@@ -42,7 +42,7 @@
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
                 <div class="card" onclick="navigateTo('calculator')" style="cursor: pointer; margin:0;">
                     <div class="card-title">📊 1RM Калькулятор</div>
-                    <p style="font-size: 12px; color: var(--text-secondary);">Максимум силы</p>
+                    <p style="font-size: 12px; color: var(--text-secondary);">Максимум и проценты</p>
                 </div>
                 <div class="card" onclick="navigateTo('calorie')" style="cursor: pointer; margin:0;">
                     <div class="card-title">⚡ Калории и БЖУ</div>
@@ -82,6 +82,19 @@
 
         <!-- Workout Screen -->
         <div id="screen-workout" class="screen hidden">
+            <!-- Rest Timer Widget Overlay -->
+            <div id="rest-timer-card" class="card hidden" style="background: var(--surface-variant); border: 2px solid var(--primary-color); text-align: center;">
+                <div class="card-title">⏱️ Таймер отдыха</div>
+                <div id="timer-display" style="font-size: 36px; font-weight: bold; color: var(--accent-color); margin: 10px 0;">01:30</div>
+                <div id="timer-next" style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">Далее: Подход</div>
+                <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 8px;">
+                    <button class="btn btn-secondary" style="width: auto; padding: 6px 12px;" onclick="setRestTime(90)">1:30 мин</button>
+                    <button class="btn btn-secondary" style="width: auto; padding: 6px 12px;" onclick="setRestTime(180)">3 мин</button>
+                    <button class="btn btn-secondary" style="width: auto; padding: 6px 12px;" onclick="setRestTime(300)">5 мин</button>
+                </div>
+                <button class="btn btn-secondary" onclick="skipRestTimer()">Пропустить отдых</button>
+            </div>
+
             <div class="card">
                 <div class="card-title" id="workout-day-title">Текущая тренировка</div>
                 <p id="workout-day-focus" style="font-size: 13px; color: var(--accent-color); margin-bottom: 12px;"></p>
@@ -132,7 +145,7 @@
         <!-- 1RM Calculator Screen -->
         <div id="screen-calculator" class="screen hidden">
             <div class="card">
-                <div class="card-title">Калькулятор 1RM</div>
+                <div class="card-title">Калькулятор 1RM и Процентовка</div>
                 <label>Вес снаряда (кг): <input type="number" id="rm-weight" value="80" oninput="calculate1RM()"></label>
                 <label>Повторения: <input type="number" id="rm-reps" value="8" oninput="calculate1RM()"></label>
                 <div style="margin-top: 16px; background: var(--surface-variant); padding: 12px; border-radius: 8px;" id="rm-result"></div>

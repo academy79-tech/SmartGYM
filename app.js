@@ -131,7 +131,6 @@ const exercisesDb = {
     }
 };
 
-// All 8 Professional Training Plans
 const plansData = [
     {
         id: "plan_5_day_split",
@@ -143,31 +142,25 @@ const plansData = [
                 dayNumber: 1,
                 titleRu: "День 1 — Акцент на грудь",
                 focusRu: "Грудные мышцы и средняя дельта",
-                exercises: ["bench_press", "incline_db_press", "dips", "flyes", "lat_raises"]
+                exercises: [
+                    { key: "bench_press", sets: [{reps: 12, weight: 50, done: false}, {reps: 12, weight: 50, done: false}, {reps: 12, weight: 50, done: false}] },
+                    { key: "incline_db_press", sets: [{reps: 12, weight: 20, done: false}, {reps: 12, weight: 20, done: false}, {reps: 12, weight: 20, done: false}] },
+                    { key: "dips", sets: [{reps: 12, weight: 0, done: false}, {reps: 12, weight: 0, done: false}, {reps: 12, weight: 0, done: false}] },
+                    { key: "flyes", sets: [{reps: 12, weight: 14, done: false}, {reps: 12, weight: 14, done: false}, {reps: 12, weight: 14, done: false}] },
+                    { key: "lat_raises", sets: [{reps: 12, weight: 10, done: false}, {reps: 12, weight: 10, done: false}, {reps: 12, weight: 10, done: false}] }
+                ]
             },
             {
                 dayNumber: 2,
                 titleRu: "День 2 — Акцент на спину",
                 focusRu: "Спина и широчайшие мышцы",
-                exercises: ["pullover", "barbell_row", "lat_pulldown", "seated_row", "hyperextension"]
-            },
-            {
-                dayNumber: 3,
-                titleRu: "День 3 — Плечи и руки",
-                focusRu: "Дельты, бицепс и трицепс",
-                exercises: ["overhead_press", "lat_raises", "biceps_curls", "triceps_pushdown"]
-            },
-            {
-                dayNumber: 4,
-                titleRu: "День 4 — Грудь и спина",
-                focusRu: "Грудь, спина и руки",
-                exercises: ["bench_press", "lat_pulldown", "incline_db_press", "biceps_curls"]
-            },
-            {
-                dayNumber: 5,
-                titleRu: "День 5 — Становая и ноги",
-                focusRu: "Становая тяга и ноги",
-                exercises: ["deadlift", "leg_press", "lunges", "leg_curls", "calf_raises"]
+                exercises: [
+                    { key: "pullover", sets: [{reps: 12, weight: 18, done: false}, {reps: 12, weight: 18, done: false}, {reps: 12, weight: 18, done: false}] },
+                    { key: "barbell_row", sets: [{reps: 12, weight: 40, done: false}, {reps: 12, weight: 40, done: false}, {reps: 12, weight: 40, done: false}] },
+                    { key: "lat_pulldown", sets: [{reps: 12, weight: 45, done: false}, {reps: 12, weight: 45, done: false}, {reps: 12, weight: 45, done: false}] },
+                    { key: "seated_row", sets: [{reps: 12, weight: 50, done: false}, {reps: 12, weight: 50, done: false}, {reps: 12, weight: 50, done: false}] },
+                    { key: "hyperextension", sets: [{reps: 12, weight: 0, done: false}, {reps: 12, weight: 0, done: false}, {reps: 12, weight: 0, done: false}] }
+                ]
             }
         ]
     },
@@ -181,127 +174,12 @@ const plansData = [
                 dayNumber: 1,
                 titleRu: "День 1 — Толкай (Push)",
                 focusRu: "Грудь, плечи, трицепс",
-                exercises: ["bench_press", "incline_db_press", "overhead_press", "triceps_pushdown"]
-            },
-            {
-                dayNumber: 2,
-                titleRu: "День 2 — Тяни (Pull)",
-                focusRu: "Спина, бицепс, задняя дельта",
-                exercises: ["lat_pulldown", "barbell_row", "seated_row", "biceps_curls"]
-            },
-            {
-                dayNumber: 3,
-                titleRu: "День 3 — Ноги (Legs)",
-                focusRu: "Квадрицепсы, бицепс бедра, икры",
-                exercises: ["deadlift", "leg_press", "leg_extensions", "calf_raises"]
-            }
-        ]
-    },
-    {
-        id: "plan_upper_lower",
-        titleRu: "4-дневный сплит Верх / Низ",
-        descriptionRu: "Популярная программа с чередованием тренировок верхней и нижней частей тела.",
-        categoryRu: "🧬 Сплит-тренировки",
-        days: [
-            {
-                dayNumber: 1,
-                titleRu: "День 1 — Верх А",
-                focusRu: "Грудь, спина, плечи",
-                exercises: ["bench_press", "barbell_row", "lat_raises"]
-            },
-            {
-                dayNumber: 2,
-                titleRu: "День 2 — Низ А",
-                focusRu: "Квадрицепсы, ягодицы, пресс",
-                exercises: ["deadlift", "leg_press", "crunch"]
-            },
-            {
-                dayNumber: 3,
-                titleRu: "День 3 — Верх Б",
-                focusRu: "Плечи, руки, спина",
-                exercises: ["overhead_press", "seated_row", "biceps_curls"]
-            },
-            {
-                dayNumber: 4,
-                titleRu: "День 4 — Низ Б",
-                focusRu: "Бицепс бедра, икры",
-                exercises: ["leg_curls", "lunges", "calf_raises"]
-            }
-        ]
-    },
-    {
-        id: "plan_fullbody_men",
-        titleRu: "Фулбади для мужчин (3 раза в неделю)",
-        descriptionRu: "Силовая программа на все тело 3 раза в неделю для набора массы.",
-        categoryRu: "🏋️ Фулбади (Всё тело)",
-        days: [
-            {
-                dayNumber: 1,
-                titleRu: "Силовая фулбади тренировка",
-                focusRu: "Сила и масса",
-                exercises: ["deadlift", "bench_press", "lat_pulldown", "overhead_press"]
-            }
-        ]
-    },
-    {
-        id: "plan_fullbody_women",
-        titleRu: "Фулбади для женщин (3 раза в неделю)",
-        descriptionRu: "Сбалансированная программа для тонуса всего тела, осанки и ягодиц.",
-        categoryRu: "🏋️ Фулбади (Всё тело)",
-        days: [
-            {
-                dayNumber: 1,
-                titleRu: "Тренировка тонус",
-                focusRu: "Ягодицы, ноги, осанка",
-                exercises: ["hyperextension", "leg_press", "lunges", "lat_pulldown", "crunch"]
-            }
-        ]
-    },
-    {
-        id: "plan_weight_loss",
-        titleRu: "Жиросжигание и рельеф",
-        descriptionRu: "Интенсивные круговые тренировки для максимального сжигания калорий.",
-        categoryRu: "⚡ Специализированные программы",
-        days: [
-            {
-                dayNumber: 1,
-                titleRu: "Круговая тренировка",
-                focusRu: "Кардио и тонус",
-                exercises: ["lunges", "dips", "lat_pulldown", "crunch"]
-            }
-        ]
-    },
-    {
-        id: "plan_hypertrophy",
-        titleRu: "Максимальная гипертрофия и масса",
-        descriptionRu: "Продвинутая бодибилдинг программа для максимального роста мышечных объемов.",
-        categoryRu: "🧬 Сплит-тренировки",
-        days: [
-            {
-                dayNumber: 1,
-                titleRu: "Грудь и Бицепс",
-                focusRu: "Гипертрофия верха",
-                exercises: ["bench_press", "incline_db_press", "biceps_curls"]
-            },
-            {
-                dayNumber: 2,
-                titleRu: "Спина и Трицепс",
-                focusRu: "Гипертрофия спины",
-                exercises: ["deadlift", "lat_pulldown", "triceps_pushdown"]
-            }
-        ]
-    },
-    {
-        id: "plan_powerlifting",
-        titleRu: "Силовая база пауэрлифтинга",
-        descriptionRu: "Развитие максимальных силовых показателей в базовых соревновательных движениях.",
-        categoryRu: "⚡ Специализированные программы",
-        days: [
-            {
-                dayNumber: 1,
-                titleRu: "Силовой день — База",
-                focusRu: "Приседания, жим, тяга",
-                exercises: ["bench_press", "deadlift", "overhead_press"]
+                exercises: [
+                    { key: "bench_press", sets: [{reps: 12, weight: 50, done: false}, {reps: 12, weight: 50, done: false}, {reps: 12, weight: 50, done: false}] },
+                    { key: "incline_db_press", sets: [{reps: 12, weight: 20, done: false}, {reps: 12, weight: 20, done: false}, {reps: 12, weight: 20, done: false}] },
+                    { key: "overhead_press", sets: [{reps: 12, weight: 30, done: false}, {reps: 12, weight: 30, done: false}, {reps: 12, weight: 30, done: false}] },
+                    { key: "triceps_pushdown", sets: [{reps: 12, weight: 25, done: false}, {reps: 12, weight: 25, done: false}, {reps: 12, weight: 25, done: false}] }
+                ]
             }
         ]
     }
@@ -332,7 +210,7 @@ let state = {
 };
 
 let restTimerInterval = null;
-let restSecondsRemaining = 90;
+let restSecondsRemaining = 90; // Default 1:30 min
 
 function startRestTimer(seconds = 90) {
     restSecondsRemaining = seconds;
@@ -429,7 +307,7 @@ function render() {
     document.getElementById('home-plan-title').innerText = state.activePlan.titleRu;
     document.getElementById('home-plan-desc').innerText = state.activePlan.descriptionRu;
 
-    // Plans Catalog grouped by category
+    // Plans Catalog
     const plansList = document.getElementById('plans-list');
     plansList.innerHTML = '';
     const categories = [...new Set(plansData.map(p => p.categoryRu))];
@@ -455,7 +333,8 @@ function render() {
         const daysContainer = document.getElementById('detail-days-list');
         daysContainer.innerHTML = '';
         p.days.forEach(d => {
-            let exHtml = d.exercises.map(exKey => {
+            let exHtml = d.exercises.map(item => {
+                const exKey = typeof item === 'string' ? item : item.key;
                 const exObj = exercisesDb[exKey];
                 return `<div style="padding: 4px 0; color: var(--text-secondary); cursor: pointer;" onclick="openExerciseDetail('${exKey}')">• ${exObj ? exObj.name : exKey}</div>`;
             }).join('');
@@ -498,16 +377,29 @@ function render() {
 
     const workoutList = document.getElementById('workout-exercises-list');
     workoutList.innerHTML = '';
-    day.exercises.forEach((exKey, idx) => {
+    day.exercises.forEach((exItem, exIdx) => {
+        const exKey = typeof exItem === 'string' ? exItem : exItem.key;
+        const setsArr = typeof exItem === 'string' ? [{reps: 12, weight: 0, done: false}, {reps: 12, weight: 0, done: false}, {reps: 12, weight: 0, done: false}] : exItem.sets;
+        if (typeof exItem === 'string') {
+            day.exercises[exIdx] = { key: exKey, sets: setsArr };
+        }
+
         const exObj = exercisesDb[exKey] || { name: exKey };
+
+        let setsHtml = setsArr.map((setObj, setIdx) => `
+            <div style="display: flex; gap: 6px; margin-top: 6px; align-items: center; background: rgba(0,0,0,0.2); padding: 6px; border-radius: 6px;">
+                <span style="font-size: 12px; font-weight: bold; width: 55px;">Подх. ${setIdx + 1}</span>
+                <label style="flex:1; font-size:11px;">Повт: <input type="number" value="${setObj.reps}" onchange="updateSetReps(${exIdx}, ${setIdx}, this.value)"></label>
+                <label style="flex:1; font-size:11px;">Вес: <input type="number" value="${setObj.weight}" onchange="updateSetWeight(${exIdx}, ${setIdx}, this.value)"></label>
+                <button class="btn ${setObj.done ? '' : 'btn-secondary'}" style="width: auto; padding: 4px 10px; font-size: 11px; margin-top: 0;" onclick="toggleSetDone(${exIdx}, ${setIdx})">${setObj.done ? '✓ Готово' : 'Отметить'}</button>
+            </div>
+        `).join('');
+
         workoutList.innerHTML += `
             <div class="card" style="margin-bottom: 12px; background: var(--surface-variant);">
-                <strong onclick="openExerciseDetail('${exKey}')" style="cursor: pointer; color: var(--accent-color);">${idx + 1}. ${exObj.name} 🎬</strong>
-                <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
-                    <label style="flex:1; font-size:12px;">Повторы: <input type="number" value="12" placeholder="12"></label>
-                    <label style="flex:1; font-size:12px;">Вес (кг): <input type="number" value="0" placeholder="0"></label>
-                    <button class="btn" style="width: auto; padding: 6px 12px; margin-top: 14px;" onclick="startRestTimer(90)">Отметить</button>
-                </div>
+                <strong onclick="openExerciseDetail('${exKey}')" style="cursor: pointer; color: var(--accent-color);">${exIdx + 1}. ${exObj.name} 🎬</strong>
+                <div style="margin-top: 6px;">${setsHtml}</div>
+                <button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px; margin-top: 8px;" onclick="addSetToExercise(${exIdx})">+ Добавить подход</button>
             </div>
         `;
     });
@@ -598,6 +490,32 @@ function switchExVariant(exKey, variantIdx) {
     }
 }
 
+function updateSetReps(exIdx, setIdx, val) {
+    const day = state.activePlan.days[state.currentDayIndex];
+    day.exercises[exIdx].sets[setIdx].reps = parseInt(val) || 12;
+}
+
+function updateSetWeight(exIdx, setIdx, val) {
+    const day = state.activePlan.days[state.currentDayIndex];
+    day.exercises[exIdx].sets[setIdx].weight = parseInt(val) || 0;
+}
+
+function toggleSetDone(exIdx, setIdx) {
+    const day = state.activePlan.days[state.currentDayIndex];
+    const setObj = day.exercises[exIdx].sets[setIdx];
+    setObj.done = !setObj.done;
+    render();
+    if (setObj.done) {
+        startRestTimer(90); // Default 1:30 min rest timer
+    }
+}
+
+function addSetToExercise(exIdx) {
+    const day = state.activePlan.days[state.currentDayIndex];
+    day.exercises[exIdx].sets.push({reps: 12, weight: 0, done: false});
+    render();
+}
+
 function showAddExerciseModal() {
     const listDiv = document.getElementById('add-exercise-list');
     listDiv.innerHTML = '';
@@ -616,7 +534,10 @@ function showAddExerciseModal() {
 function addExerciseToCurrentWorkout(exKey) {
     const day = state.activePlan.days[state.currentDayIndex];
     if (day) {
-        day.exercises.push(exKey);
+        day.exercises.push({
+            key: exKey,
+            sets: [{reps: 12, weight: 0, done: false}, {reps: 12, weight: 0, done: false}, {reps: 12, weight: 0, done: false}]
+        });
         alert('Упражнение успешно добавлено в тренировку!');
         navigateTo('workout');
     }
@@ -660,7 +581,7 @@ function removeVoiceEx(index) {
 function saveVoicePlan() {
     const title = document.getElementById('voice-plan-title').value || "Мой план";
 
-    const exKeys = state.voiceExercises.map(name => {
+    const exItems = state.voiceExercises.map(name => {
         const lower = name.toLowerCase();
         let matchedKey = "bench_press";
         if (lower.includes("присед") || lower.includes("ног")) matchedKey = "leg_press";
@@ -682,7 +603,10 @@ function saveVoicePlan() {
             const found = Object.keys(exercisesDb).find(k => exercisesDb[k].name.toLowerCase().includes(lower));
             if (found) matchedKey = found;
         }
-        return matchedKey;
+        return {
+            key: matchedKey,
+            sets: [{reps: 12, weight: 0, done: false}, {reps: 12, weight: 0, done: false}, {reps: 12, weight: 0, done: false}]
+        };
     });
 
     const newPlan = {
@@ -695,7 +619,7 @@ function saveVoicePlan() {
                 dayNumber: 1,
                 titleRu: title,
                 focusRu: "Пользовательская тренировка",
-                exercises: exKeys
+                exercises: exItems
             }
         ]
     };
@@ -711,8 +635,10 @@ function requestFinishWorkout() {
     if (confirm("Завершить тренировку и сохранить в дневник?")) {
         const day = state.activePlan.days[state.currentDayIndex];
         let tonnage = 0;
-        day.exercises.forEach(() => {
-            tonnage += 12 * 50 * 3;
+        day.exercises.forEach(ex => {
+            ex.sets.forEach(s => {
+                tonnage += (parseInt(s.reps) || 12) * (parseInt(s.weight) || 0);
+            });
         });
 
         const record = {

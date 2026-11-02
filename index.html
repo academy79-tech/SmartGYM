@@ -84,13 +84,13 @@
         <div id="screen-workout" class="screen hidden">
             <!-- Rest Timer Widget Overlay -->
             <div id="rest-timer-card" class="card hidden" style="background: var(--surface-variant); border: 2px solid var(--primary-color); text-align: center;">
-                <div class="card-title">⏱️ Таймер отдыха</div>
+                <div class="card-title">⏱️ Таймер отдыха (по умолч. 1:30)</div>
                 <div id="timer-display" style="font-size: 36px; font-weight: bold; color: var(--accent-color); margin: 10px 0;">01:30</div>
-                <div id="timer-next" style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">Далее: Подход</div>
-                <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 8px;">
-                    <button class="btn btn-secondary" style="width: auto; padding: 6px 12px;" onclick="setRestTime(90)">1:30 мин</button>
-                    <button class="btn btn-secondary" style="width: auto; padding: 6px 12px;" onclick="setRestTime(180)">3 мин</button>
-                    <button class="btn btn-secondary" style="width: auto; padding: 6px 12px;" onclick="setRestTime(300)">5 мин</button>
+                <div style="display: flex; gap: 6px; justify-content: center; margin-bottom: 8px; flex-wrap: wrap;">
+                    <button class="btn btn-secondary" style="width: auto; padding: 6px 10px; font-size: 12px;" onclick="setRestTime(90)">1:30 мин</button>
+                    <button class="btn btn-secondary" style="width: auto; padding: 6px 10px; font-size: 12px;" onclick="setRestTime(120)">2 мин</button>
+                    <button class="btn btn-secondary" style="width: auto; padding: 6px 10px; font-size: 12px;" onclick="setRestTime(180)">3 мин</button>
+                    <button class="btn btn-secondary" style="width: auto; padding: 6px 10px; font-size: 12px;" onclick="setRestTime(300)">5 мин</button>
                 </div>
                 <button class="btn btn-secondary" onclick="skipRestTimer()">Пропустить отдых</button>
             </div>

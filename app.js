@@ -131,6 +131,9 @@ const exercisesDb = {
     }
 };
 
+const defaultSets = () => [{reps: 12, weight: 0, done: false}, {reps: 12, weight: 0, done: false}, {reps: 12, weight: 0, done: false}];
+
+// All 8 Professional Training Plans
 const plansData = [
     {
         id: "plan_5_day_split",
@@ -139,27 +142,51 @@ const plansData = [
         categoryRu: "🧬 Сплит-тренировки",
         days: [
             {
-                dayNumber: 1,
-                titleRu: "День 1 — Акцент на грудь",
-                focusRu: "Грудные мышцы и средняя дельта",
+                dayNumber: 1, titleRu: "День 1 — Акцент на грудь", focusRu: "Грудные мышцы и средняя дельта",
                 exercises: [
-                    { key: "bench_press", sets: [{reps: 12, weight: 50, done: false}, {reps: 12, weight: 50, done: false}, {reps: 12, weight: 50, done: false}] },
-                    { key: "incline_db_press", sets: [{reps: 12, weight: 20, done: false}, {reps: 12, weight: 20, done: false}, {reps: 12, weight: 20, done: false}] },
-                    { key: "dips", sets: [{reps: 12, weight: 0, done: false}, {reps: 12, weight: 0, done: false}, {reps: 12, weight: 0, done: false}] },
-                    { key: "flyes", sets: [{reps: 12, weight: 14, done: false}, {reps: 12, weight: 14, done: false}, {reps: 12, weight: 14, done: false}] },
-                    { key: "lat_raises", sets: [{reps: 12, weight: 10, done: false}, {reps: 12, weight: 10, done: false}, {reps: 12, weight: 10, done: false}] }
+                    { key: "bench_press", sets: defaultSets() },
+                    { key: "incline_db_press", sets: defaultSets() },
+                    { key: "dips", sets: defaultSets() },
+                    { key: "flyes", sets: defaultSets() },
+                    { key: "lat_raises", sets: defaultSets() }
                 ]
             },
             {
-                dayNumber: 2,
-                titleRu: "День 2 — Акцент на спину",
-                focusRu: "Спина и широчайшие мышцы",
+                dayNumber: 2, titleRu: "День 2 — Акцент на спину", focusRu: "Спина и широчайшие мышцы",
                 exercises: [
-                    { key: "pullover", sets: [{reps: 12, weight: 18, done: false}, {reps: 12, weight: 18, done: false}, {reps: 12, weight: 18, done: false}] },
-                    { key: "barbell_row", sets: [{reps: 12, weight: 40, done: false}, {reps: 12, weight: 40, done: false}, {reps: 12, weight: 40, done: false}] },
-                    { key: "lat_pulldown", sets: [{reps: 12, weight: 45, done: false}, {reps: 12, weight: 45, done: false}, {reps: 12, weight: 45, done: false}] },
-                    { key: "seated_row", sets: [{reps: 12, weight: 50, done: false}, {reps: 12, weight: 50, done: false}, {reps: 12, weight: 50, done: false}] },
-                    { key: "hyperextension", sets: [{reps: 12, weight: 0, done: false}, {reps: 12, weight: 0, done: false}, {reps: 12, weight: 0, done: false}] }
+                    { key: "pullover", sets: defaultSets() },
+                    { key: "barbell_row", sets: defaultSets() },
+                    { key: "lat_pulldown", sets: defaultSets() },
+                    { key: "seated_row", sets: defaultSets() },
+                    { key: "hyperextension", sets: defaultSets() }
+                ]
+            },
+            {
+                dayNumber: 3, titleRu: "День 3 — Плечи и руки", focusRu: "Дельты, бицепс и трицепс",
+                exercises: [
+                    { key: "overhead_press", sets: defaultSets() },
+                    { key: "lat_raises", sets: defaultSets() },
+                    { key: "biceps_curls", sets: defaultSets() },
+                    { key: "triceps_pushdown", sets: defaultSets() }
+                ]
+            },
+            {
+                dayNumber: 4, titleRu: "День 4 — Грудь и спина", focusRu: "Грудь, спина и руки",
+                exercises: [
+                    { key: "bench_press", sets: defaultSets() },
+                    { key: "lat_pulldown", sets: defaultSets() },
+                    { key: "incline_db_press", sets: defaultSets() },
+                    { key: "biceps_curls", sets: defaultSets() }
+                ]
+            },
+            {
+                dayNumber: 5, titleRu: "День 5 — Становая и ноги", focusRu: "Становая тяга и ноги",
+                exercises: [
+                    { key: "deadlift", sets: defaultSets() },
+                    { key: "leg_press", sets: defaultSets() },
+                    { key: "lunges", sets: defaultSets() },
+                    { key: "leg_curls", sets: defaultSets() },
+                    { key: "calf_raises", sets: defaultSets() }
                 ]
             }
         ]
@@ -171,14 +198,162 @@ const plansData = [
         categoryRu: "🧬 Сплит-тренировки",
         days: [
             {
-                dayNumber: 1,
-                titleRu: "День 1 — Толкай (Push)",
-                focusRu: "Грудь, плечи, трицепс",
+                dayNumber: 1, titleRu: "День 1 — Толкай (Push)", focusRu: "Грудь, плечи, трицепс",
                 exercises: [
-                    { key: "bench_press", sets: [{reps: 12, weight: 50, done: false}, {reps: 12, weight: 50, done: false}, {reps: 12, weight: 50, done: false}] },
-                    { key: "incline_db_press", sets: [{reps: 12, weight: 20, done: false}, {reps: 12, weight: 20, done: false}, {reps: 12, weight: 20, done: false}] },
-                    { key: "overhead_press", sets: [{reps: 12, weight: 30, done: false}, {reps: 12, weight: 30, done: false}, {reps: 12, weight: 30, done: false}] },
-                    { key: "triceps_pushdown", sets: [{reps: 12, weight: 25, done: false}, {reps: 12, weight: 25, done: false}, {reps: 12, weight: 25, done: false}] }
+                    { key: "bench_press", sets: defaultSets() },
+                    { key: "incline_db_press", sets: defaultSets() },
+                    { key: "overhead_press", sets: defaultSets() },
+                    { key: "triceps_pushdown", sets: defaultSets() }
+                ]
+            },
+            {
+                dayNumber: 2, titleRu: "День 2 — Тяни (Pull)", focusRu: "Спина, бицепс, задняя дельта",
+                exercises: [
+                    { key: "lat_pulldown", sets: defaultSets() },
+                    { key: "barbell_row", sets: defaultSets() },
+                    { key: "seated_row", sets: defaultSets() },
+                    { key: "biceps_curls", sets: defaultSets() }
+                ]
+            },
+            {
+                dayNumber: 3, titleRu: "День 3 — Ноги (Legs)", focusRu: "Квадрицепсы, бицепс бедра, икры",
+                exercises: [
+                    { key: "deadlift", sets: defaultSets() },
+                    { key: "leg_press", sets: defaultSets() },
+                    { key: "leg_extensions", sets: defaultSets() },
+                    { key: "calf_raises", sets: defaultSets() }
+                ]
+            }
+        ]
+    },
+    {
+        id: "plan_upper_lower",
+        titleRu: "4-дневный сплит Верх / Низ",
+        descriptionRu: "Популярная программа с чередованием тренировок верхней и нижней частей тела.",
+        categoryRu: "🧬 Сплит-тренировки",
+        days: [
+            {
+                dayNumber: 1, titleRu: "День 1 — Верх А", focusRu: "Грудь, спина, плечи",
+                exercises: [
+                    { key: "bench_press", sets: defaultSets() },
+                    { key: "barbell_row", sets: defaultSets() },
+                    { key: "lat_raises", sets: defaultSets() }
+                ]
+            },
+            {
+                dayNumber: 2, titleRu: "День 2 — Низ А", focusRu: "Квадрицепсы, ягодицы, пресс",
+                exercises: [
+                    { key: "deadlift", sets: defaultSets() },
+                    { key: "leg_press", sets: defaultSets() },
+                    { key: "crunch", sets: defaultSets() }
+                ]
+            },
+            {
+                dayNumber: 3, titleRu: "День 3 — Верх Б", focusRu: "Плечи, руки, спина",
+                exercises: [
+                    { key: "overhead_press", sets: defaultSets() },
+                    { key: "seated_row", sets: defaultSets() },
+                    { key: "biceps_curls", sets: defaultSets() }
+                ]
+            },
+            {
+                dayNumber: 4, titleRu: "День 4 — Низ Б", focusRu: "Бицепс бедра, икры",
+                exercises: [
+                    { key: "leg_curls", sets: defaultSets() },
+                    { key: "lunges", sets: defaultSets() },
+                    { key: "calf_raises", sets: defaultSets() }
+                ]
+            }
+        ]
+    },
+    {
+        id: "plan_fullbody_men",
+        titleRu: "Фулбади для мужчин (3 раза в неделю)",
+        descriptionRu: "Силовая программа на все тело 3 раза в неделю для набора массы.",
+        categoryRu: "🏋️ Фулбади (Всё тело)",
+        days: [
+            {
+                dayNumber: 1, titleRu: "Силовая фулбади тренировка", focusRu: "Сила и масса",
+                exercises: [
+                    { key: "deadlift", sets: defaultSets() },
+                    { key: "bench_press", sets: defaultSets() },
+                    { key: "lat_pulldown", sets: defaultSets() },
+                    { key: "overhead_press", sets: defaultSets() }
+                ]
+            }
+        ]
+    },
+    {
+        id: "plan_fullbody_women",
+        titleRu: "Фулбади для женщин (3 раза в неделю)",
+        descriptionRu: "Сбалансированная программа для тонуса всего тела, осанки и ягодиц.",
+        categoryRu: "🏋️ Фулбади (Всё тело)",
+        days: [
+            {
+                dayNumber: 1, titleRu: "Тренировка тонус", focusRu: "Ягодицы, ноги, осанка",
+                exercises: [
+                    { key: "hyperextension", sets: defaultSets() },
+                    { key: "leg_press", sets: defaultSets() },
+                    { key: "lunges", sets: defaultSets() },
+                    { key: "lat_pulldown", sets: defaultSets() },
+                    { key: "crunch", sets: defaultSets() }
+                ]
+            }
+        ]
+    },
+    {
+        id: "plan_weight_loss",
+        titleRu: "Жиросжигание и рельеф",
+        descriptionRu: "Интенсивные круговые тренировки для максимального сжигания калорий.",
+        categoryRu: "⚡ Специализированные программы",
+        days: [
+            {
+                dayNumber: 1, titleRu: "Круговая тренировка", focusRu: "Кардио и тонус",
+                exercises: [
+                    { key: "lunges", sets: defaultSets() },
+                    { key: "dips", sets: defaultSets() },
+                    { key: "lat_pulldown", sets: defaultSets() },
+                    { key: "crunch", sets: defaultSets() }
+                ]
+            }
+        ]
+    },
+    {
+        id: "plan_hypertrophy",
+        titleRu: "Максимальная гипертрофия и масса",
+        descriptionRu: "Продвинутая бодибилдинг программа для максимального роста мышечных объемов.",
+        categoryRu: "🧬 Сплит-тренировки",
+        days: [
+            {
+                dayNumber: 1, titleRu: "Грудь и Бицепс", focusRu: "Гипертрофия верха",
+                exercises: [
+                    { key: "bench_press", sets: defaultSets() },
+                    { key: "incline_db_press", sets: defaultSets() },
+                    { key: "biceps_curls", sets: defaultSets() }
+                ]
+            },
+            {
+                dayNumber: 2, titleRu: "Спина и Трицепс", focusRu: "Гипертрофия спины",
+                exercises: [
+                    { key: "deadlift", sets: defaultSets() },
+                    { key: "lat_pulldown", sets: defaultSets() },
+                    { key: "triceps_pushdown", sets: defaultSets() }
+                ]
+            }
+        ]
+    },
+    {
+        id: "plan_powerlifting",
+        titleRu: "Силовая база пауэрлифтинга",
+        descriptionRu: "Развитие максимальных силовых показателей в базовых соревновательных движениях.",
+        categoryRu: "⚡ Специализированные программы",
+        days: [
+            {
+                dayNumber: 1, titleRu: "Силовой день — База", focusRu: "Приседания, жим, тяга",
+                exercises: [
+                    { key: "bench_press", sets: defaultSets() },
+                    { key: "deadlift", sets: defaultSets() },
+                    { key: "overhead_press", sets: defaultSets() }
                 ]
             }
         ]
@@ -307,7 +482,7 @@ function render() {
     document.getElementById('home-plan-title').innerText = state.activePlan.titleRu;
     document.getElementById('home-plan-desc').innerText = state.activePlan.descriptionRu;
 
-    // Plans Catalog
+    // Plans Catalog grouped by category
     const plansList = document.getElementById('plans-list');
     plansList.innerHTML = '';
     const categories = [...new Set(plansData.map(p => p.categoryRu))];
@@ -506,7 +681,7 @@ function toggleSetDone(exIdx, setIdx) {
     setObj.done = !setObj.done;
     render();
     if (setObj.done) {
-        startRestTimer(90); // Default 1:30 min rest timer
+        startRestTimer(90);
     }
 }
 
@@ -536,7 +711,7 @@ function addExerciseToCurrentWorkout(exKey) {
     if (day) {
         day.exercises.push({
             key: exKey,
-            sets: [{reps: 12, weight: 0, done: false}, {reps: 12, weight: 0, done: false}, {reps: 12, weight: 0, done: false}]
+            sets: defaultSets()
         });
         alert('Упражнение успешно добавлено в тренировку!');
         navigateTo('workout');
@@ -605,7 +780,7 @@ function saveVoicePlan() {
         }
         return {
             key: matchedKey,
-            sets: [{reps: 12, weight: 0, done: false}, {reps: 12, weight: 0, done: false}, {reps: 12, weight: 0, done: false}]
+            sets: defaultSets()
         };
     });
 
